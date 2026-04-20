@@ -1,0 +1,243 @@
+body.preloader-is-active {
+    overflow: hidden;
+}
+
+.yoola-preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 16% 18%, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0) 24%),
+        radial-gradient(circle at 82% 18%, rgba(251, 191, 36, 0.16) 0%, rgba(251, 191, 36, 0) 28%),
+        linear-gradient(145deg, #0b1830 0%, #0f1b2d 54%, #13243a 100%);
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.52s ease, visibility 0.52s ease;
+}
+
+.yoola-preloader.is-hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.yoola-preloader__backdrop {
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+    background-size: 46px 46px;
+    mask-image: radial-gradient(circle at center, black 34%, transparent 84%);
+}
+
+.yoola-preloader__inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: min(90vw, 360px);
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+    transition: opacity 0.42s ease, transform 0.42s ease;
+}
+
+.yoola-preloader.is-ready .yoola-preloader__inner {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.yoola-preloader__stage {
+    position: relative;
+    width: min(72vw, 240px);
+    aspect-ratio: 1;
+}
+
+.yoola-preloader__glow {
+    position: absolute;
+    inset: 16%;
+    border-radius: 999px;
+    background:
+        radial-gradient(circle, rgba(251, 191, 36, 0.34) 0%, rgba(251, 191, 36, 0.12) 38%, rgba(251, 191, 36, 0) 76%);
+    filter: blur(26px);
+    animation: yoola-preloader-pulse 2.2s ease-in-out infinite;
+}
+
+.yoola-preloader__spinner {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background:
+        conic-gradient(from 0deg,
+            rgba(255, 255, 255, 0.04) 0deg,
+            rgba(251, 191, 36, 0.14) 70deg,
+            #fbbf24 138deg,
+            rgba(251, 191, 36, 0.08) 210deg,
+            rgba(255, 255, 255, 0) 360deg);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 14px), #000 calc(100% - 14px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 14px), #000 calc(100% - 14px));
+    animation: yoola-preloader-spin 1.5s linear infinite;
+}
+
+.yoola-preloader__orbit {
+    position: absolute;
+    inset: 18px;
+    border-radius: 999px;
+    border: 1px dashed rgba(255, 255, 255, 0.18);
+    animation: yoola-preloader-spin-reverse 7s linear infinite;
+}
+
+.yoola-preloader__satellite-track {
+    position: absolute;
+    border-radius: 999px;
+}
+
+.yoola-preloader__satellite-track--outer {
+    inset: 2px;
+    animation: yoola-preloader-spin 2.1s linear infinite;
+}
+
+.yoola-preloader__satellite-track--inner {
+    inset: 34px;
+    animation: yoola-preloader-spin-reverse 3.8s linear infinite;
+}
+
+.yoola-preloader__satellite {
+    position: absolute;
+    left: 50%;
+    top: -6px;
+    border-radius: 999px;
+    transform: translateX(-50%);
+}
+
+.yoola-preloader__satellite--outer {
+    width: 16px;
+    height: 16px;
+    background: #fbbf24;
+    box-shadow: 0 0 18px rgba(251, 191, 36, 0.72);
+}
+
+.yoola-preloader__satellite--inner {
+    width: 11px;
+    height: 11px;
+    background: #ffffff;
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.65);
+}
+
+.yoola-preloader__core {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 104px;
+    height: 104px;
+    border-radius: 34px;
+    transform: translate(-50%, -50%);
+    background:
+        linear-gradient(180deg, rgba(255, 249, 232, 0.98) 0%, rgba(255, 255, 255, 0.96) 100%);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.7),
+        0 24px 40px rgba(0, 0, 0, 0.18),
+        0 0 0 8px rgba(255, 255, 255, 0.05);
+    animation: yoola-preloader-core-float 2.4s ease-in-out infinite;
+}
+
+.yoola-preloader__core-shine {
+    position: absolute;
+    inset: 1px;
+    border-radius: 33px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.78) 0%, rgba(255, 255, 255, 0) 48%);
+}
+
+.yoola-preloader__logo {
+    position: relative;
+    z-index: 1;
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
+}
+
+.yoola-preloader__word {
+    color: #ffffff;
+    font-size: clamp(40px, 9vw, 64px);
+    font-weight: 700;
+    letter-spacing: -0.08em;
+    line-height: 1;
+}
+
+.yoola-preloader__label {
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 15px;
+    line-height: 1.45;
+    letter-spacing: -0.02em;
+}
+
+@keyframes yoola-preloader-spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes yoola-preloader-spin-reverse {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes yoola-preloader-pulse {
+    0%,
+    100% {
+        transform: scale(0.94);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.03);
+        opacity: 1;
+    }
+}
+
+@keyframes yoola-preloader-core-float {
+    0%,
+    100% {
+        transform: translate(-50%, -50%) translateY(0);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) translateY(-6px);
+    }
+}
+
+@media (max-width: 767px) {
+    .yoola-preloader__stage {
+        width: min(78vw, 220px);
+    }
+
+    .yoola-preloader__core {
+        width: 94px;
+        height: 94px;
+        border-radius: 30px;
+    }
+
+    .yoola-preloader__logo {
+        width: 62px;
+        height: 62px;
+    }
+}

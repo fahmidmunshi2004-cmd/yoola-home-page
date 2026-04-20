@@ -1,0 +1,170 @@
+/*=========== colors ====================*/
+:root {
+    /* ===== Yellow ===== */
+    --yellow-50: #fffbeb;
+    --yellow-100: #fef3c7;
+    --yellow-200: #fde68a;
+    --yellow-300: #fcd34d;
+    --yellow-400: #fbbf24;
+    --yellow-500: #ffcc00;
+    --yellow-600: #d9ae00;
+    --yellow-700: #b38f00;
+    --yellow-800: #8c7100;
+    --yellow-900: #665200;
+
+    /* ===== Gray / Dark ===== */
+    --gray-50: #f1f3f5;
+    --gray-100: #e2e6ea;
+    --gray-200: #c5cdd5;
+    --gray-300: #8d9bad;
+    --gray-400: #4a5568;
+    --gray-500: #0f1b2d;
+    --gray-600: #0d1828;
+    --gray-700: #0a121e;
+    --gray-800: #070d15;
+    --gray-900: #04070b;
+
+    /* ===== Green ===== */
+    --green-50: #ecfdf5;
+    --green-100: #d1fae5;
+    --green-200: #a7f3d0;
+    --green-300: #6ee7b7;
+    --green-400: #34d399;
+    --green-500: #10b981;
+    --green-600: #059669;
+    --green-700: #047857;
+    --green-800: #065f46;
+    --green-900: #064e3b;
+
+    /* ===== Blue ===== */
+    --blue-50: #eff6ff;
+    --blue-100: #dbeafe;
+    --blue-200: #dbeafe;
+    --blue-300: #93c5fd;
+    --blue-400: #60a5fa;
+    --blue-500: #3b82f6;
+    --blue-600: #2563eb;
+    --blue-700: #1d4ed8;
+    --blue-800: #1e40af;
+    --blue-900: #1e3a8a;
+
+    /* ===== Red ===== */
+    --red-50: #fef2f2;
+    --red-100: #fee2e2;
+    --red-200: #fecaca;
+    --red-300: #fca5a5;
+    --red-400: #f87171;
+    --red-500: #ef4444;
+    --red-600: #dc2626;
+    --red-700: #b91c1c;
+    --red-800: #991b1b;
+    --red-900: #7f1d1d;
+}
+
+/*======================= Font family ============================*/
+:root {
+    --font-family: "Plus Jakarta Sans", sans-serif;
+    --second-family: "Bricolage Grotesque", sans-serif;
+}
+
+html,
+body {
+    font-family: var(--font-family);
+    scroll-behavior: smooth;
+}
+
+.custom__container {
+    max-width: 1140px;
+    margin: 0 auto;
+}
+
+.heading__font {
+    font-family: var(--second-family);
+}
+
+.site-section-anchor {
+    scroll-margin-top: 32px;
+}
+
+.header__area {
+    transition: box-shadow 0.28s ease, backdrop-filter 0.28s ease, -webkit-backdrop-filter 0.28s ease;
+}
+
+.header__area.is-scrolled {
+    box-shadow: 0 10px 28px rgba(15, 27, 45, 0.08);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.header__menu-link {
+    display: inline-block;
+}
+
+/*=============== hover animation ============*/
+.custom__border {
+    position: relative;
+    transition: 0.3s linear;
+}
+
+.custom__border::before {
+    position: absolute;
+    content: "";
+    background: var(--yellow-400);
+    width: 0;
+    height: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 0;
+    transition: 0.3s linear;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.custom__border:hover {
+    color: var(--yellow-400);
+}
+
+.custom__border:hover:before {
+    width: 100%;
+    opacity: 1;
+    visibility: visible;
+}
+
+.custom__border.active:before {
+    width: 100%;
+    opacity: 1;
+    visibility: visible;
+}
+
+.custom__border.active {
+    color: var(--yellow-400);
+}
+
+/*===== custom button=====*/
+.custom__button .btn {
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    color: var(--gray-900);
+    background: var(--yellow-400);
+    border-radius: 25px;
+    padding: 0 22px;
+    white-space: nowrap;
+    height: 48px;
+    transition: 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.custom__button .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    filter: brightness(0.98);
+}
+
+.custom__button .btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+    filter: brightness(0.95);
+}
