@@ -1,7 +1,14 @@
 async function loadPageSections() {
     const includeBlocks = Array.from(document.querySelectorAll("[data-include]"));
+    const hasInlinePreloader = Boolean(document.getElementById("site-preloader"));
 
     if (!includeBlocks.length) {
+        if (hasInlinePreloader) {
+            window.dispatchEvent(new Event("yoola:preloader-mounted"));
+        }
+
+        window.dispatchEvent(new Event("resize"));
+        window.dispatchEvent(new Event("yoola:sections-loaded"));
         return;
     }
 
