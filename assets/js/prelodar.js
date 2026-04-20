@@ -2,6 +2,7 @@
     let hasHiddenPreloader = false;
     let sectionsReady = false;
     let pageReady = document.readyState === "complete";
+    let fallbackTimer = null;
 
     function getPreloader() {
         return document.getElementById("site-preloader");
@@ -33,6 +34,7 @@
         }
 
         hasHiddenPreloader = true;
+        window.clearTimeout(fallbackTimer);
         preloader.classList.add("is-hidden");
         document.body.classList.remove("preloader-is-active");
 
@@ -63,4 +65,9 @@
         pageReady = true;
         maybeHidePreloader();
     });
+
+    window.addEventListener("error", hidePreloader);
+    window.addEventListener("unhandledrejection", hidePreloader);
+
+    fallbackTimer = window.setTimeout(hidePreloader, 4000);
 })();
