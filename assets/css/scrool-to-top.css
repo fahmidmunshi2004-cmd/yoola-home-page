@@ -106,34 +106,70 @@ only screen and (min-width: 576px) and (max-width: 767px),
     width: 200%;
     position: absolute;
     bottom: 100%;
+    display: block;
+    will-change: transform;
+    transform-origin: center bottom;
 }
 
 .scrollToTop .water_wave_back {
     right: 0;
     fill: var(--yellow-400);
-    animation: wave-back 1.4s infinite linear;
+    opacity: 0.9;
+    animation: wave-back 1.8s infinite linear;
 }
 
 .scrollToTop .water_wave_front {
     left: 0;
     fill: rgba(122, 37, 158, 0.8784313725);
     margin-bottom: -1px;
-    animation: wave-front 0.7s infinite linear;
+    animation: wave-front 1s infinite linear;
+}
+
+.scrollToTop .water_wave_back use {
+    fill: var(--yellow-400) !important;
+}
+
+.scrollToTop .water_wave_front use {
+    fill: rgba(255, 255, 255, 0.62) !important;
 }
 
 @keyframes wave-front {
+    0% {
+        -moz-transform: translate3d(0, 0, 0);
+        -o-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+        -moz-transform: translate3d(-25%, 2px, 0);
+        -o-transform: translate3d(-25%, 2px, 0);
+        -ms-transform: translate3d(-25%, 2px, 0);
+        -webkit-transform: translate3d(-25%, 2px, 0);
+        transform: translate3d(-25%, 2px, 0);
+    }
+
     100% {
-        -moz-transform: translateX(-50%);
-        -o-transform: translateX(-50%);
-        -ms-transform: translateX(-50%);
-        -webkit-transform: translateX(-50%);
-        transform: translateX(-50%);
+        -moz-transform: translate3d(-50%, 0, 0);
+        -o-transform: translate3d(-50%, 0, 0);
+        -ms-transform: translate3d(-50%, 0, 0);
+        -webkit-transform: translate3d(-50%, 0, 0);
+        transform: translate3d(-50%, 0, 0);
     }
 }
 
 @keyframes wave-back {
+    0% {
+        transform: translate3d(0, 1px, 0);
+    }
+
+    50% {
+        transform: translate3d(25%, -1px, 0);
+    }
+
     100% {
-        transform: translateX(50%);
+        transform: translate3d(50%, 1px, 0);
     }
 }
 

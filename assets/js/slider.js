@@ -17,11 +17,19 @@ window.initStoriesSlider = function initStoriesSlider() {
             delay: 3800,
             disableOnInteraction: false,
         },
-        spaceBetween: 18,
-        slidesPerView: 1.08,
+        spaceBetween: 14,
+        slidesPerView: 1.03,
         breakpoints: {
+            480: {
+                slidesPerView: 1.18,
+                spaceBetween: 16,
+            },
             640: {
-                slidesPerView: 1.45,
+                slidesPerView: 1.35,
+                spaceBetween: 18,
+            },
+            768: {
+                slidesPerView: 1.8,
                 spaceBetween: 20,
             },
             992: {
@@ -29,7 +37,7 @@ window.initStoriesSlider = function initStoriesSlider() {
                 spaceBetween: 22,
             },
             1280: {
-                slidesPerView: 3.35,
+                slidesPerView: 3.2,
                 spaceBetween: 24,
             },
         },

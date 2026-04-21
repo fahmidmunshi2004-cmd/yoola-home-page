@@ -109,6 +109,16 @@
     transform: translateX(4px);
 }
 
+@media (max-width: 639px) {
+    .offer-card__icon {
+        width: 62px;
+        height: 62px;
+        margin-bottom: 1.25rem;
+        border-radius: 16px;
+        font-size: 28px;
+    }
+}
+
 @media (min-width: 640px) {
     .offer-card {
         padding: 1.75rem;

@@ -105,6 +105,13 @@ body::-webkit-scrollbar-thumb:hover {
     margin: 0 auto;
 }
 
+@media (max-width: 1199px) {
+    .custom__container {
+        width: calc(100% - 32px);
+        max-width: none;
+    }
+}
+
 .heading__font {
     font-family: var(--second-family);
 }
@@ -194,4 +201,8 @@ body::-webkit-scrollbar-thumb:hover {
     transform: translateY(1px);
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
     filter: brightness(0.95);
+}
+
+section {
+    overflow: hidden;
 }
