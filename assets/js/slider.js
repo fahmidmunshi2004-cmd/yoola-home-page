@@ -1,3 +1,33 @@
+window.initHeroSlider = function initHeroSlider() {
+    if (typeof Swiper === "undefined") {
+        return;
+    }
+
+    const heroSlider = document.querySelector(".heroSwiper");
+
+    if (!heroSlider || heroSlider.classList.contains("swiper-initialized")) {
+        return;
+    }
+
+    new Swiper(heroSlider, {
+        loop: true,
+        speed: 780,
+        grabCursor: true,
+        autoplay: {
+            delay: 4200,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".hero_swiper_pagination",
+            clickable: true,
+        },
+        navigation: {
+            nextEl: ".hero_swiper_next",
+            prevEl: ".hero_swiper_prev",
+        },
+    });
+};
+
 window.initStoriesSlider = function initStoriesSlider() {
     if (typeof Swiper === "undefined") {
         return;
@@ -44,10 +74,15 @@ window.initStoriesSlider = function initStoriesSlider() {
     });
 };
 
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", window.initStoriesSlider);
-} else {
+window.initYoolaSliders = function initYoolaSliders() {
+    window.initHeroSlider();
     window.initStoriesSlider();
+};
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", window.initYoolaSliders);
+} else {
+    window.initYoolaSliders();
 }
 
-window.addEventListener("yoola:sections-loaded", window.initStoriesSlider);
+window.addEventListener("yoola:sections-loaded", window.initYoolaSliders);
