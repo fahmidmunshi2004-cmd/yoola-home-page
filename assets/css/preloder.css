@@ -27,8 +27,7 @@ body.preloader-is-active {
 }
 
 .yoola-preloader__backdrop,
-.yoola-preloader__orbit,
-.yoola-preloader__satellite-track {
+.yoola-preloader__orbit {
     display: none;
 }
 
@@ -69,31 +68,66 @@ body.preloader-is-active {
     position: absolute;
     inset: 0;
     border-radius: 999px;
-    background:
-        conic-gradient(from 0deg,
-            rgba(255, 255, 255, 0) 0deg,
-            rgba(255, 255, 255, 0) 290deg,
-            rgba(251, 191, 36, 0.22) 328deg,
-            #fbbf24 360deg);
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px));
-    mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px));
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-    animation: yoola-preloader-spin 1.45s linear infinite;
+    border: 1.5px solid rgba(255, 255, 255, 0.28);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.03),
+        0 0 0 1px rgba(255, 255, 255, 0.02);
 }
 
 .yoola-preloader__spinner::before {
+    content: none;
+}
+
+.yoola-preloader__satellite-track {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+}
+
+.yoola-preloader__satellite-track--outer {
+    animation: yoola-preloader-spin 1.45s linear infinite;
+}
+
+.yoola-preloader__satellite-track--outer::before {
     position: absolute;
     content: "";
-    left: 50%;
-    top: 2px;
-    width: 10px;
-    height: 10px;
+    inset: 0;
     border-radius: 999px;
-    background: #fbbf24;
+    background: conic-gradient(from 0deg,
+            rgba(255, 255, 255, 0) 0deg,
+            rgba(255, 255, 255, 0) 300deg,
+            rgba(251, 191, 36, 0.06) 318deg,
+            rgba(251, 191, 36, 0.2) 336deg,
+            rgba(251, 191, 36, 0.55) 352deg,
+            #fbbf24 360deg,
+            rgba(255, 255, 255, 0) 360deg);
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+    mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+}
+
+.yoola-preloader__satellite-track--inner {
+    display: none;
+}
+
+.yoola-preloader__satellite {
+    position: absolute;
+    left: 50%;
+    top: -4px;
+    border-radius: 999px;
     transform: translateX(-50%);
+}
+
+.yoola-preloader__satellite--outer {
+    width: 6px;
+    height: 6px;
+    background: #fbbf24;
     box-shadow:
-        0 0 0 4px rgba(251, 191, 36, 0.1),
-        0 0 14px rgba(251, 191, 36, 0.28);
+        0 0 0 2px rgba(251, 191, 36, 0.1),
+        0 0 10px rgba(251, 191, 36, 0.22);
+}
+
+.yoola-preloader__satellite--inner {
+    display: none;
 }
 
 .yoola-preloader__core {
@@ -103,32 +137,26 @@ body.preloader-is-active {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 68px;
-    height: 68px;
-    border-radius: 22px;
+    width: 56px;
+    height: 56px;
+    border-radius: 0;
     transform: translate(-50%, -50%);
-    background: linear-gradient(180deg, rgba(255, 252, 244, 0.98) 0%, rgba(255, 255, 255, 0.96) 100%);
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.75),
-        0 14px 26px rgba(0, 0, 0, 0.14),
-        0 0 0 4px rgba(255, 255, 255, 0.04);
+    background: transparent;
+    box-shadow: none;
     animation: yoola-preloader-core-float 3s ease-in-out infinite;
-    overflow: hidden;
 }
 
 .yoola-preloader__core-shine {
-    position: absolute;
-    inset: 1px;
-    border-radius: 21px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0) 55%);
+    display: none;
 }
 
 .yoola-preloader__logo {
     position: relative;
     z-index: 1;
-    width: 42px;
-    height: 42px;
+    width: 52px;
+    height: 52px;
     object-fit: contain;
+    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.24));
 }
 
 .yoola-preloader__word {
@@ -185,24 +213,19 @@ body.preloader-is-active {
         width: min(48vw, 132px);
     }
 
-    .yoola-preloader__spinner::before {
-        width: 9px;
-        height: 9px;
+    .yoola-preloader__satellite--outer {
+        width: 5px;
+        height: 5px;
     }
 
     .yoola-preloader__core {
-        width: 62px;
-        height: 62px;
-        border-radius: 20px;
-    }
-
-    .yoola-preloader__core-shine {
-        border-radius: 19px;
+        width: 50px;
+        height: 50px;
     }
 
     .yoola-preloader__logo {
-        width: 38px;
-        height: 38px;
+        width: 46px;
+        height: 46px;
     }
 
     .yoola-preloader__label {
