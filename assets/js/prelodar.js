@@ -1,5 +1,6 @@
 (function () {
     let hasHiddenPreloader = false;
+    let hasMountedPreloader = false;
     let sectionsReady = false;
     let pageReady = document.readyState === "complete";
     let fallbackTimer = null;
@@ -9,12 +10,17 @@
     }
 
     function mountPreloader() {
+        if (hasMountedPreloader || hasHiddenPreloader) {
+            return;
+        }
+
         const preloader = getPreloader();
 
         if (!preloader) {
             return;
         }
 
+        hasMountedPreloader = true;
         document.body.classList.add("preloader-is-active");
 
         window.requestAnimationFrame(() => {
@@ -52,6 +58,12 @@
         }
 
         hidePreloader();
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", mountPreloader, { once: true });
+    } else {
+        mountPreloader();
     }
 
     window.addEventListener("yoola:preloader-mounted", mountPreloader);

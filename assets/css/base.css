@@ -73,6 +73,33 @@ body {
     scroll-behavior: smooth;
 }
 
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--yellow-400) rgba(15, 27, 45, 0.12);
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    width: 4px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track {
+    background: rgba(15, 27, 45, 0.08);
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--yellow-300) 0%, var(--yellow-400) 100%);
+    border-radius: 999px;
+    border: 2px solid rgba(15, 27, 45, 0.08);
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, var(--yellow-400) 0%, var(--yellow-500) 100%);
+}
+
 .custom__container {
     max-width: 1140px;
     margin: 0 auto;

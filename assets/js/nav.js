@@ -9,6 +9,13 @@ window.initNavigation = function initNavigation() {
 
     const navLinks = Array.from(header.querySelectorAll("[data-nav-link]"));
     const scrollLinks = Array.from(header.querySelectorAll("[data-scroll-link], [data-nav-link]"));
+    const mobileNavToggle = header.querySelector("[data-mobile-nav-toggle]");
+    const mobileNav = header.querySelector("[data-mobile-nav]");
+    const mobileNavOverlay = header.querySelector("[data-mobile-nav-overlay]");
+    const mobileNavCloseButtons = Array.from(header.querySelectorAll("[data-mobile-nav-close]"));
+    const hasMobileNav = Boolean(mobileNavToggle && mobileNav && mobileNavOverlay);
+    let isMobileNavOpen = false;
+    let previousBodyOverflow = "";
 
     const getTarget = (link) => {
         const href = link.getAttribute("href");
@@ -29,6 +36,26 @@ window.initNavigation = function initNavigation() {
 
     const updateHeaderShadow = () => {
         header.classList.toggle("is-scrolled", window.scrollY > 200);
+    };
+
+    const setMobileNavState = (shouldOpen) => {
+        if (!hasMobileNav || isMobileNavOpen === shouldOpen) {
+            return;
+        }
+
+        isMobileNavOpen = shouldOpen;
+
+        mobileNavToggle.setAttribute("aria-expanded", String(shouldOpen));
+        mobileNav.setAttribute("data-open", String(shouldOpen));
+        mobileNavOverlay.setAttribute("data-open", String(shouldOpen));
+        mobileNav.setAttribute("aria-hidden", String(!shouldOpen));
+
+        if (shouldOpen) {
+            previousBodyOverflow = document.body.style.overflow;
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = previousBodyOverflow;
+        }
     };
 
     const smoothScrollTo = (target) => {
@@ -54,8 +81,40 @@ window.initNavigation = function initNavigation() {
             if (link.hasAttribute("data-nav-link")) {
                 setActiveLink(target.id);
             }
+
+            if (hasMobileNav && mobileNav.contains(link)) {
+                setMobileNavState(false);
+            }
         });
     });
+
+    if (hasMobileNav) {
+        mobileNavToggle.addEventListener("click", () => {
+            setMobileNavState(!isMobileNavOpen);
+        });
+
+        mobileNavOverlay.addEventListener("click", () => {
+            setMobileNavState(false);
+        });
+
+        mobileNavCloseButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+                setMobileNavState(false);
+            });
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                setMobileNavState(false);
+            }
+        });
+
+        window.addEventListener("resize", () => {
+            if (window.innerWidth >= 1024) {
+                setMobileNavState(false);
+            }
+        });
+    }
 
     const targetEntries = navLinks
         .map((link) => {
