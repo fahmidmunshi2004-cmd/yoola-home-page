@@ -5,24 +5,18 @@
     <div class="yoola-preloader__inner">
         <div class="yoola-preloader__stage" aria-hidden="true">
             <div class="yoola-preloader__glow"></div>
-
-            <div class="yoola-preloader__spinner"></div>
-            <div class="yoola-preloader__orbit"></div>
-
-            <div class="yoola-preloader__satellite-track yoola-preloader__satellite-track--outer">
-                <span class="yoola-preloader__satellite yoola-preloader__satellite--outer"></span>
-            </div>
-
-            <div class="yoola-preloader__satellite-track yoola-preloader__satellite-track--inner">
-                <span class="yoola-preloader__satellite yoola-preloader__satellite--inner"></span>
-            </div>
+            <svg class="yoola-preloader__rings" viewBox="0 0 160 160" aria-hidden="true">
+                <circle class="yoola-preloader__ring yoola-preloader__ring--green" cx="80" cy="80" r="56"></circle>
+                <circle class="yoola-preloader__ring yoola-preloader__ring--yellow" cx="80" cy="80" r="56"></circle>
+                <circle class="yoola-preloader__ring yoola-preloader__ring--coral" cx="80" cy="80" r="56"></circle>
+                <circle class="yoola-preloader__dot yoola-preloader__dot--green" cx="92" cy="135" r="4.5"></circle>
+                <circle class="yoola-preloader__dot yoola-preloader__dot--yellow" cx="92" cy="135" r="4.5"></circle>
+                <circle class="yoola-preloader__dot yoola-preloader__dot--coral" cx="92" cy="135" r="4.5"></circle>
+            </svg>
 
             <div class="yoola-preloader__core">
-                <span class="yoola-preloader__core-shine"></span>
                 <img src="./assets/img/logo/main-logo.png" alt="Yoola" class="yoola-preloader__logo">
             </div>
         </div>
-
-        <div class="yoola-preloader__word heading__font text-[#fbbf24]">YOOLA</div>
     </div>
 </div>

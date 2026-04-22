@@ -11,10 +11,9 @@ body.preloader-is-active {
     justify-content: center;
     overflow: hidden;
     background:
-        radial-gradient(circle at 20% 18%, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0) 22%),
-        radial-gradient(circle at 78% 20%, rgba(251, 191, 36, 0.14) 0%, rgba(251, 191, 36, 0) 24%),
-        radial-gradient(circle at 50% 50%, rgba(251, 191, 36, 0.05) 0%, rgba(251, 191, 36, 0) 32%),
-        linear-gradient(145deg, #091220 0%, #0e1a2d 52%, #15253d 100%);
+        radial-gradient(circle at 20% 18%, rgba(16, 185, 129, 0.06) 0%, rgba(16, 185, 129, 0) 24%),
+        radial-gradient(circle at 78% 20%, rgba(251, 191, 36, 0.08) 0%, rgba(251, 191, 36, 0) 26%),
+        linear-gradient(180deg, #fdfdfb 0%, #f5f6f2 100%);
     opacity: 1;
     visibility: visible;
     transition: opacity 0.45s ease, visibility 0.45s ease;
@@ -26,8 +25,7 @@ body.preloader-is-active {
     pointer-events: none;
 }
 
-.yoola-preloader__backdrop,
-.yoola-preloader__orbit {
+.yoola-preloader__backdrop {
     display: none;
 }
 
@@ -37,8 +35,7 @@ body.preloader-is-active {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
-    width: min(90vw, 320px);
+    width: min(90vw, 340px);
     opacity: 0;
     transform: translateY(14px) scale(0.98);
     transition: opacity 0.35s ease, transform 0.35s ease;
@@ -51,83 +48,73 @@ body.preloader-is-active {
 
 .yoola-preloader__stage {
     position: relative;
-    width: min(42vw, 148px);
+    width: min(46vw, 196px);
     aspect-ratio: 1;
 }
 
 .yoola-preloader__glow {
     position: absolute;
-    inset: 18%;
+    inset: 20%;
     border-radius: 999px;
-    background: radial-gradient(circle, rgba(251, 191, 36, 0.24) 0%, rgba(251, 191, 36, 0.08) 38%, rgba(251, 191, 36, 0) 74%);
-    filter: blur(18px);
-    animation: yoola-preloader-pulse 2.8s ease-in-out infinite;
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.18) 0%, rgba(251, 191, 36, 0.08) 34%, rgba(251, 191, 36, 0) 72%);
+    filter: blur(20px);
+    animation: yoola-preloader-pulse 3s ease-in-out infinite;
 }
 
-.yoola-preloader__spinner {
+.yoola-preloader__rings {
     position: absolute;
     inset: 0;
-    border-radius: 999px;
-    border: 1.5px solid rgba(255, 255, 255, 0.28);
-    box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.03),
-        0 0 0 1px rgba(255, 255, 255, 0.02);
+    width: 100%;
+    height: 100%;
+    overflow: visible;
 }
 
-.yoola-preloader__spinner::before {
-    content: none;
+.yoola-preloader__ring {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-dasharray: 76 276;
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    will-change: transform;
+    animation: yoola-preloader-ring-spin 2.2s linear infinite;
 }
 
-.yoola-preloader__satellite-track {
-    position: absolute;
-    inset: 0;
-    border-radius: 999px;
+.yoola-preloader__ring--green {
+    stroke: #34d399;
+    --ring-rotation: 0deg;
 }
 
-.yoola-preloader__satellite-track--outer {
-    animation: yoola-preloader-spin 1.45s linear infinite;
+.yoola-preloader__ring--yellow {
+    stroke: #fbbf24;
+    --ring-rotation: 120deg;
 }
 
-.yoola-preloader__satellite-track--outer::before {
-    position: absolute;
-    content: "";
-    inset: 0;
-    border-radius: 999px;
-    background: conic-gradient(from 0deg,
-            rgba(255, 255, 255, 0) 0deg,
-            rgba(255, 255, 255, 0) 300deg,
-            rgba(251, 191, 36, 0.06) 318deg,
-            rgba(251, 191, 36, 0.2) 336deg,
-            rgba(251, 191, 36, 0.55) 352deg,
-            #fbbf24 360deg,
-            rgba(255, 255, 255, 0) 360deg);
-    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
-    mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+.yoola-preloader__ring--coral {
+    stroke: #60a5fa;
+    --ring-rotation: 240deg;
 }
 
-.yoola-preloader__satellite-track--inner {
-    display: none;
+.yoola-preloader__dot {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    will-change: transform;
+    animation: yoola-preloader-ring-spin 2.2s linear infinite;
 }
 
-.yoola-preloader__satellite {
-    position: absolute;
-    left: 50%;
-    top: -4px;
-    border-radius: 999px;
-    transform: translateX(-50%);
+.yoola-preloader__dot--green {
+    fill: #34d399;
+    --ring-rotation: 0deg;
 }
 
-.yoola-preloader__satellite--outer {
-    width: 6px;
-    height: 6px;
-    background: #fbbf24;
-    box-shadow:
-        0 0 0 2px rgba(251, 191, 36, 0.1),
-        0 0 10px rgba(251, 191, 36, 0.22);
+.yoola-preloader__dot--yellow {
+    fill: #fbbf24;
+    --ring-rotation: 120deg;
 }
 
-.yoola-preloader__satellite--inner {
-    display: none;
+.yoola-preloader__dot--coral {
+    fill: #60a5fa;
+    --ring-rotation: 240deg;
 }
 
 .yoola-preloader__core {
@@ -137,17 +124,13 @@ body.preloader-is-active {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 56px;
-    height: 56px;
-    border-radius: 0;
+    width: 72px;
+    height: 72px;
+    border-radius: 999px;
     transform: translate(-50%, -50%);
     background: transparent;
     box-shadow: none;
     animation: yoola-preloader-core-float 3s ease-in-out infinite;
-}
-
-.yoola-preloader__core-shine {
-    display: none;
 }
 
 .yoola-preloader__logo {
@@ -156,48 +139,35 @@ body.preloader-is-active {
     width: 52px;
     height: 52px;
     object-fit: contain;
-    filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.24));
-}
-
-.yoola-preloader__word {
-    color: #ffffff;
-    font-size: clamp(34px, 8vw, 48px);
-    font-weight: 700;
-    letter-spacing: -0.06em;
-    line-height: 1;
-}
-
-.yoola-preloader__label {
-    color: rgba(255, 255, 255, 0.68);
-    font-size: 14px;
-    line-height: 1.4;
-    letter-spacing: -0.02em;
-}
-
-@keyframes yoola-preloader-spin {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(360deg);
-    }
+    filter: drop-shadow(0 8px 14px rgba(15, 27, 45, 0.1));
 }
 
 @keyframes yoola-preloader-pulse {
+
     0%,
     100% {
-        transform: scale(0.95);
-        opacity: 0.52;
+        transform: scale(0.92);
+        opacity: 0.5;
     }
 
     50% {
-        transform: scale(1.02);
-        opacity: 0.82;
+        transform: scale(1.04);
+        opacity: 0.85;
+    }
+}
+
+@keyframes yoola-preloader-ring-spin {
+    0% {
+        transform: rotate(var(--ring-rotation));
+    }
+
+    100% {
+        transform: rotate(calc(var(--ring-rotation) + 360deg));
     }
 }
 
 @keyframes yoola-preloader-core-float {
+
     0%,
     100% {
         transform: translate(-50%, -50%) translateY(0);
@@ -210,25 +180,20 @@ body.preloader-is-active {
 
 @media (max-width: 767px) {
     .yoola-preloader__stage {
-        width: min(48vw, 132px);
-    }
-
-    .yoola-preloader__satellite--outer {
-        width: 5px;
-        height: 5px;
+        width: min(56vw, 168px);
     }
 
     .yoola-preloader__core {
-        width: 50px;
-        height: 50px;
+        width: 62px;
+        height: 62px;
     }
 
     .yoola-preloader__logo {
-        width: 46px;
-        height: 46px;
+        width: 44px;
+        height: 44px;
     }
 
-    .yoola-preloader__label {
-        font-size: 13px;
+    .yoola-preloader__ring {
+        stroke-width: 3;
     }
 }

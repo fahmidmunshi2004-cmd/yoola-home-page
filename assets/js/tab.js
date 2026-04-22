@@ -9,6 +9,14 @@ window.initWorksTabs = function initWorksTabs() {
 
     const tabButtons = Array.from(worksTabsSection.querySelectorAll("[data-works-tab-button]"));
     const tabPanels = Array.from(worksTabsSection.querySelectorAll("[data-works-panel]"));
+    const panelsStage = tabPanels[0]?.parentElement;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const transitionDuration = 320;
+
+    let activeTab = null;
+    let isAnimating = false;
+    let queuedTab = null;
+    let animationTimer = null;
 
     const activeButtonClasses = [
         "border-[#FBBF24]",
@@ -22,11 +30,16 @@ window.initWorksTabs = function initWorksTabs() {
         "text-[#475467]",
     ];
 
-    const setActiveTab = (tabName) => {
+    if (panelsStage) {
+        panelsStage.classList.add("works-tabs__stage");
+    }
+
+    const setButtonState = (tabName) => {
         tabButtons.forEach((button) => {
             const isActive = button.dataset.tab === tabName;
 
             button.setAttribute("aria-selected", String(isActive));
+            button.tabIndex = isActive ? 0 : -1;
             button.classList.toggle("hover:text-[#101828]", !isActive);
 
             activeButtonClasses.forEach((className) => {
@@ -37,15 +50,114 @@ window.initWorksTabs = function initWorksTabs() {
                 button.classList.toggle(className, !isActive);
             });
         });
-
-        tabPanels.forEach((panel) => {
-            panel.classList.toggle("hidden", panel.dataset.worksPanel !== tabName);
-        });
     };
 
-    tabButtons.forEach((button, index) => {
+    const showPanelInstant = (tabName) => {
+        tabPanels.forEach((panel) => {
+            const isActive = panel.dataset.worksPanel === tabName;
+
+            panel.classList.toggle("hidden", !isActive);
+            panel.classList.remove("is-entering", "is-leaving", "is-overlay");
+            panel.setAttribute("aria-hidden", String(!isActive));
+        });
+
+        if (panelsStage) {
+            panelsStage.style.height = "";
+        }
+
+        activeTab = tabName;
+    };
+
+    const finishPanelTransition = (nextPanel, previousPanel, nextTab) => {
+        previousPanel.classList.add("hidden");
+        previousPanel.classList.remove("is-leaving");
+        previousPanel.setAttribute("aria-hidden", "true");
+
+        nextPanel.classList.remove("is-overlay", "is-entering");
+        nextPanel.setAttribute("aria-hidden", "false");
+
+        activeTab = nextTab;
+        isAnimating = false;
+
+        if (panelsStage) {
+            panelsStage.style.height = `${nextPanel.offsetHeight}px`;
+
+            window.requestAnimationFrame(() => {
+                panelsStage.style.height = "";
+            });
+        }
+
+        if (queuedTab && queuedTab !== activeTab) {
+            const pendingTab = queuedTab;
+            queuedTab = null;
+            requestTabChange(pendingTab);
+            return;
+        }
+
+        queuedTab = null;
+    };
+
+    const animatePanelChange = (nextTab) => {
+        const currentPanel = tabPanels.find((panel) => panel.dataset.worksPanel === activeTab);
+        const nextPanel = tabPanels.find((panel) => panel.dataset.worksPanel === nextTab);
+
+        if (!currentPanel || !nextPanel || currentPanel === nextPanel || !panelsStage || prefersReducedMotion.matches) {
+            setButtonState(nextTab);
+            showPanelInstant(nextTab);
+            return;
+        }
+
+        isAnimating = true;
+        window.clearTimeout(animationTimer);
+
+        setButtonState(nextTab);
+
+        nextPanel.classList.remove("hidden", "is-leaving");
+        nextPanel.classList.add("is-overlay", "is-entering");
+        nextPanel.setAttribute("aria-hidden", "false");
+
+        currentPanel.classList.remove("is-entering");
+
+        const currentHeight = currentPanel.offsetHeight;
+        const nextHeight = nextPanel.offsetHeight;
+
+        panelsStage.style.height = `${currentHeight}px`;
+
+        window.requestAnimationFrame(() => {
+            currentPanel.classList.add("is-leaving");
+            nextPanel.classList.remove("is-entering");
+            panelsStage.style.height = `${nextHeight}px`;
+        });
+
+        animationTimer = window.setTimeout(() => {
+            finishPanelTransition(nextPanel, currentPanel, nextTab);
+        }, transitionDuration + 40);
+    };
+
+    const requestTabChange = (tabName) => {
+        if (!tabName || tabName === activeTab) {
+            return;
+        }
+
+        if (isAnimating) {
+            queuedTab = tabName;
+            return;
+        }
+
+        animatePanelChange(tabName);
+    };
+
+    const initialButton =
+        tabButtons.find((button) => button.getAttribute("aria-selected") === "true") ?? tabButtons[0];
+
+    if (initialButton) {
+        setButtonState(initialButton.dataset.tab);
+        showPanelInstant(initialButton.dataset.tab);
+    }
+
+    tabButtons.forEach((button) => {
         button.addEventListener("click", () => {
-            setActiveTab(button.dataset.tab);
+            requestTabChange(button.dataset.tab);
         });
 
         button.addEventListener("keydown", (event) => {
@@ -75,12 +187,8 @@ window.initWorksTabs = function initWorksTabs() {
             event.preventDefault();
             const nextButton = tabButtons[nextIndex];
             nextButton.focus();
-            setActiveTab(nextButton.dataset.tab);
+            requestTabChange(nextButton.dataset.tab);
         });
-
-        if (index === 0) {
-            setActiveTab(button.dataset.tab);
-        }
     });
 };
 
