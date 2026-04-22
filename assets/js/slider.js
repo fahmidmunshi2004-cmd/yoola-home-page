@@ -4,6 +4,33 @@ window.initHeroSlider = function initHeroSlider() {
     }
 
     const heroSlider = document.querySelector(".heroSwiper");
+    const heroNavButtons = document.querySelectorAll(".hero_swiper_btn");
+
+    heroNavButtons.forEach((button) => {
+        if (button.dataset.tapAnimationBound === "true") {
+            return;
+        }
+
+        button.dataset.tapAnimationBound = "true";
+
+        button.addEventListener("click", () => {
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                return;
+            }
+
+            button.classList.remove("is-tapping");
+
+            requestAnimationFrame(() => {
+                button.classList.add("is-tapping");
+            });
+        });
+
+        button.addEventListener("animationend", (event) => {
+            if (event.animationName === "hero-swiper-btn-tap") {
+                button.classList.remove("is-tapping");
+            }
+        });
+    });
 
     if (!heroSlider || heroSlider.classList.contains("swiper-initialized")) {
         return;
