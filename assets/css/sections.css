@@ -258,6 +258,7 @@
 }
 
 @media (max-width: 767px) {
+
     .brand_marquee::before,
     .brand_marquee::after {
         width: 32px;
